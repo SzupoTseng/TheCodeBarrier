@@ -170,8 +170,8 @@ def md_to_html(text):
 
 CSS = """
 :root{--ink:#1d2230;--mut:#5a6378;--line:#e3e0d6;--pa:#fbf8f0;--accent:#9a3b2f;--accent2:#2f5d7a;--box:#fdf3e3;--boxln:#e8c88a}
-*{box-sizing:border-box}
-body{margin:0;font-family:"Iowan Old Style","Palatino Linotype","Noto Serif",Georgia,serif;color:var(--ink);background:var(--pa);line-height:1.8;font-size:18px}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:"Iowan Old Style","Palatino Linotype","Noto Serif",Georgia,serif;color:var(--ink);background:var(--pa);line-height:1.8;font-size:clamp(16.5px,2.7vw,18px);overflow-wrap:break-word}
 #wrap{display:flex;align-items:flex-start}
 #side{position:sticky;top:0;height:100vh;overflow-y:auto;width:320px;min-width:320px;background:#14182a;color:#cdd2e6;padding:26px 18px;font-family:"Helvetica Neue",Arial,sans-serif;font-size:13.5px;line-height:1.5}
 #side h1{font-size:21px;color:#f4b860;margin:0 0 4px;letter-spacing:2px}
@@ -196,7 +196,7 @@ hr{border:0;border-top:1px solid var(--line);margin:36px 0}
 ul,ol{margin:14px 0;padding-left:24px}
 li{margin:6px 0}
 table{border-collapse:collapse;width:100%;margin:20px 0;font-size:14.5px;font-family:"Helvetica Neue",Arial,sans-serif}
-th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;overflow-wrap:break-word}
 th{background:#f0ebdd}
 figure.plate{margin:30px 0;text-align:center}
 figure.plate img{width:100%;max-width:760px;border-radius:10px;box-shadow:0 10px 30px rgba(20,24,42,.28)}
@@ -213,7 +213,7 @@ figure.cover{margin:0 0 10px;text-align:center}
 figure.cover img{width:100%;max-width:680px;border-radius:12px;box-shadow:0 12px 36px rgba(20,24,42,.3)}
 @page{size:A4;margin:16mm 17mm}
 @media print{html,body{background:#fff;font-size:11pt;line-height:1.6}#side{display:none}main{max-width:100%;margin:0;padding:0}h1{font-size:20pt}h2{font-size:15pt;margin-top:22pt}h3{font-size:13pt}section.chapter{page-break-before:always}section.cover-page{page-break-before:avoid}figure.cover img{max-width:100%;box-shadow:none}h2,h3{break-after:avoid}table,figure,blockquote,pre{break-inside:avoid}blockquote.concept,blockquote.review{box-shadow:none}}
-@media(max-width:820px){#side{display:none}main{padding:30px 18px}}
+@media(max-width:820px){#side{display:none}main{padding:26px 16px}h1{font-size:24px}h2{font-size:19px}h3{font-size:17px}h4{font-size:15.5px}table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}pre.code{font-size:12.5px}}
 """
 
 JS = """
