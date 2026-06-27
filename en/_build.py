@@ -46,7 +46,7 @@ def title_for(base, text):
         return m.group(1).strip() if m else "Preface"
     m = re.search(r'^#\s+(Chapter\s+\d+.*)$', text, re.M)
     if m: return m.group(1).strip()
-    m = re.search(r'^#\s+(Appendix\s+[A-G].*)$', text, re.M)
+    m = re.search(r'^#\s+(Appendix\s+[A-R].*)$', text, re.M)
     return m.group(1).strip() if m else base
 
 def part_for(text):

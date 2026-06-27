@@ -46,14 +46,31 @@ python _build.py        # 合併單檔 .md + 帶側欄目錄的 .html（PDF 由 
 python _convert_cn.py   # 繁體 → 简体（需 opencc），輸出到 cn/
 ```
 
+#### PDF 生成注意事項（HTML → PDF）
+
+PDF 一律由 `_build.py` 產出的 HTML 列印。**正解是 Chrome headless，不要手動 Ctrl+P。** 若 PDF 異常過大，請依下列要點**重新生成**：
+
+```bash
+chrome.exe --headless --disable-gpu --print-to-pdf="輸出.pdf" "來源.html"
+```
+
+1. **用 Chrome headless，別手動 Ctrl+P。** headless 預設不印 CSS 背景 → 檔案小；手動勾「背景圖形」會把全書螢光底逐頁點陣化 → 暴漲到 100 MB＋（最大的雷）。
+2. **印前先把 Chrome 完全關掉**（`taskkill /F /IM chrome.exe /T`）。否則 headless 會 singleton handoff、靜默失敗。Edge headless print 被 policy 禁用，不能當備案。
+3. **一次只印一個檔，不要平行。** 同時印多版會互相汙染（曾把某版印成 200 MB＋）；逐一單跑才正常。
+4. **`--user-data-dir` 用可寫目錄**（專案內，如 `.pdfbuild/`），別放 `C:\Windows\Temp`（會跳權限錯誤框）；印完清掉。
+5. **中日文檔名先複製成 ASCII 暫存**（如 `tmp.html` → `tmp.pdf` 再改回），避免 cmd 在 cp950 下解析出錯。
+6. `.bat` 用 **CRLF + 純 ASCII 路徑**。
+
+> 各版正常大小不同：較短的書約 14–16 MB/版；**本書含附錄 H–M「三百式／三百題」六百項目錄，頁數與獨特字符多，PDF 本來就偏大**——以同字數比例為準，而非硬套 14 MB。若明顯超出比例（背景被點陣化、或被平行印製汙染），即依上列重印。
+
 ### 語言版本
 
 | 語言 | 狀態 | 位置 |
 |------|------|------|
 | 繁體中文 | ✅ 完成（11 章 + 附錄 A–R） | 倉庫根目錄 |
 | 简体中文 | ✅ 完成（opencc tw2sp 轉換） | [`cn/`](cn/) |
-| English | 🚧 核心完成（第 1–11 章 + 附錄 A–G）；附錄 H–R 翻譯中 | [`en/`](en/) |
-| 日本語 | 🚧 規劃中 | [`ja/`](ja/) |
+| English | ✅ 完成（第 1–11 章 + 附錄 A–R） | [`en/`](en/) |
+| 日本語 | ✅ 完成（第 1–11 章 + 附錄 A–R） | [`ja/`](ja/) |
 
 ---
 
@@ -88,12 +105,27 @@ Real engineering and unverified rumor sit side by side; every unverified product
 
 Pure Python, no third-party deps: `python _build.py` (merged `.md` + sidebar-TOC `.html`; PDF printed from HTML).
 
+**PDF generation (HTML → PDF).** Always print via **Chrome headless, never manual Ctrl+P**. If a PDF comes out abnormally large, **regenerate** with these rules:
+
+```bash
+chrome.exe --headless --disable-gpu --print-to-pdf="out.pdf" "src.html"
+```
+
+1. **Headless, not Ctrl+P** — headless omits CSS backgrounds by default (small files); manual print with "Background graphics" ON rasterizes the highlight gradients page-by-page → balloons past 100 MB (the big trap).
+2. **Fully close Chrome first** (`taskkill /F /IM chrome.exe /T`), or headless silently fails via singleton handoff. Edge headless print is policy-disabled — not a fallback.
+3. **Print one file at a time** — printing editions in parallel cross-contaminates (one edition blew up to 200 MB+); sequential single runs are normal.
+4. **`--user-data-dir` must be writable** (in-project, e.g. `.pdfbuild/`), not `C:\Windows\Temp`; clean it up afterward.
+5. **Copy CJK filenames to ASCII temps** first (`tmp.html` → `tmp.pdf`, then rename) to avoid cmd cp950 parsing errors.
+6. `.bat` files: **CRLF + ASCII-only paths**.
+
+> Normal sizes differ per book: a shorter title is ~14–16 MB/edition, but **this book's appendices H–M (the two 600-item catalogs) make it page- and glyph-heavy, so its PDFs are inherently larger** — judge by per-content proportion, not a flat 14 MB target. Regenerate only if a file is disproportionate (rasterized backgrounds or parallel-print contamination).
+
 | Language | Status | Path |
 |----------|--------|------|
 | 繁體中文 | ✅ Complete (11 ch + App. A–R) | repo root |
 | 简体中文 | ✅ Complete (opencc tw2sp) | [`cn/`](cn/) |
-| English | 🚧 Core complete (Ch. 1–11 + App. A–G); App. H–R in translation | [`en/`](en/) |
-| 日本語 | 🚧 Planned | [`ja/`](ja/) |
+| English | ✅ Complete (Ch. 1–11 + App. A–R) | [`en/`](en/) |
+| 日本語 | ✅ Complete (Ch. 1–11 + App. A–R) | [`ja/`](ja/) |
 
 ---
 
@@ -135,8 +167,8 @@ Pure Python, no third-party deps: `python _build.py` (merged `.md` + sidebar-TOC
 - **第二楽章（第 7–9 章）使う**：推論—行動ループ、二十の難関と人間的操作、AI のためのコンピュータ再設計。
 - **第三楽章（第 10–11 章）養う**：キャッシュの物理学、超大規模キャッシュと最前線の武器庫。
 
-> 🚧 日本語版は準備中です。本文は繁体中文版・英語版を参照してください。
-> The Japanese edition is in progress; please refer to the Traditional Chinese or English editions for now.
+> ✅ 日本語版は完成しました（第 1–11 章 ＋ 付録 A–R）。[`ja/`](ja/) を参照してください。
+> The Japanese edition is complete (Ch. 1–11 + App. A–R). See [`ja/`](ja/).
 
 ---
 
