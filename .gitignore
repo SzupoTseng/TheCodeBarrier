@@ -1,0 +1,10 @@
+# 本倉庫「會」收錄成品（PDF / HTML / 合併 MD）——它們是這本書的交付物。
+# This repo intentionally tracks the deliverables (PDF / HTML / merged MD).
+
+# ── 排除原始素材快照與暫存 / raw source snapshots & scratch only ──
+doc/
+*_serp*.txt
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

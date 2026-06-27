@@ -1,0 +1,10 @@
+# 正規化：倉庫內一律 LF，避免 Windows/WSL 混用造成換行抖動。
+# Normalize: store & check out text as LF (this repo is built under WSL).
+* text=auto eol=lf
+
+# 二進位檔不做換行轉換 / binary assets — never touch line endings.
+*.png binary
+*.pdf binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
